@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 class Saved extends Component {
   state = {
@@ -11,6 +10,7 @@ class Saved extends Component {
     // API.getBook(this.props.match.params.id)
     //   .then(res => this.setState({ book: res.data }))
     //   .catch(err => console.log(err));
+    console.log("I have rendered the Saved page");
   }
 
   render() {
