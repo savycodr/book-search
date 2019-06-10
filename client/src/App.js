@@ -16,10 +16,9 @@ function App() {
 
         <Nav/>
         <Jumbotron/>
+        <Route exact path="/" component={Search} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/saved" component={Saved} />
-
-          <h2>Welcome to React</h2>
           
       </div>
       </Router>

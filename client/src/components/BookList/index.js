@@ -35,7 +35,6 @@ export function GoogleBookListItem({
           <Col size="xs-4 sm-2">
             <a type="button" rel="noreferrer noopener" className="btn btn-outline-success" target="_blank" href={book.url}>View</a> 
             <button type="button" className="btn btn-primary" onClick={saveBook}>Save</button>
-          }
           </Col>
         </Row>
 
@@ -62,7 +61,7 @@ export function BookListItem({
 }) {
   return (
 
-    <li className="list-group-item" key={book._id}>}
+    <li className="list-group-item" key={book._id}>
     
       <Container>
         <Row>
