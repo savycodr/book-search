@@ -1,6 +1,8 @@
 import React from "react";
 import Thumbnail from "../Thumbnail";
 import { Container, Row, Col } from "../Grid";
+import DeleteBtn from "../DeleteBtn";
+
 
 // Exporting both BookList and BookListItem from this file
 
@@ -11,7 +13,7 @@ export function BookList({ children }) {
 
 // BookListItem renders a bootstrap list item containing data from the books
 export function BookListItem({
-  book
+  book, fromGoogle, saveBook
 }) {
   return (
     <li className="list-group-item" key={book.id}>
@@ -27,8 +29,13 @@ export function BookListItem({
          </Col>
 
           <Col size="xs-4 sm-2">
-            <a type="button" class="btn btn-outline-success" target="_blank" href={book.url}>View</a>
-            <button type="button" class="btn btn-primary">Save</button>
+            <a type="button" rel="noreferrer noopener" className="btn btn-outline-success" target="_blank" href={book.url}>View</a>
+            {fromGoogle ? 
+            <button type="button" className="btn btn-primary" onClick={saveBook}>Save</button>
+            :
+            // <button type="button" class="btn btn-primary">Delete</button>
+            <DeleteBtn/>
+          }
           </Col>
         </Row>
 

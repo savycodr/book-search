@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import { BookList, BookListItem } from "../components/BookList";
 
+// in state we hold the array of books that are populated from the api call to google books, the title the user is searching for, the currentBook that the user wants to save to the database
 class Search extends Component {
   state = {
     books: [],
     title: "",
+    currentBook: {}
   };
 
   componentDidMount() {
@@ -15,7 +17,6 @@ class Search extends Component {
 
   // call the api to get all the books with this title
   // this is a clientside call to google books
-  // we need to be able to handle more than one book result
   loadBooks = () => {
     API.getBooks(this.state.title)
       .then(res => {
@@ -51,6 +52,24 @@ class Search extends Component {
       })
       .catch(err => console.log(err));
   };
+
+  // HLS thinking this through
+  // not sure this book needs to be stateful
+  // this is the method called when save button is clicked
+  // It will call a post to the /books route.
+  saveBook = (newBook, e) => {
+
+  console.log("saved!!! " + newBook.title);
+
+  API.saveBook({
+    book: newBook
+  })
+    .then( 
+      //HLS when a book has been saved what do you want to do?
+      )
+    .catch(err => console.log(err));
+
+}
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -110,7 +129,9 @@ class Search extends Component {
                     // description={book.description}
                     // href={book.url}
                     // thumbnail={book.image} 
-                    book = {book}         
+                    book = {book}  
+                    fromGoogle = {true}
+                    saveBook = {(e) => this.saveBook(book, e)}
                   />
                 );
               })}
