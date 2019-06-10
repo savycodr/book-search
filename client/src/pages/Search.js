@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import API from "../utils/API";
+import { BookList, BookListItem } from "../components/BookList";
 
 class Search extends Component {
   state = {
@@ -34,14 +35,14 @@ class Search extends Component {
           console.log("the  url: " + item.volumeInfo.infoLink);
           console.log("the  image: " + item.volumeInfo.imageLinks.thumbnail);
           let book = {};
-           book.id = item.id;
-           book.title = item.volumeInfo.title;
-           book.authors = item.volumeInfo.authors;
-           book.description = item.volumeInfo.description;
-           book.summary = item.searchInfo.textSnippet;
-           book.url = item.volumeInfo.infoLink;
-           book.image = item.volumeInfo.imageLinks.thumbnail;
-           localBooks.push(book);
+          book.id = item.id;
+          book.title = item.volumeInfo.title;
+          book.authors = item.volumeInfo.authors;
+          book.description = item.volumeInfo.description;
+          book.summary = item.searchInfo.textSnippet;
+          book.url = item.volumeInfo.infoLink;
+          book.image = item.volumeInfo.imageLinks.thumbnail;
+          localBooks.push(book);
         })
 
         // set state
@@ -53,7 +54,7 @@ class Search extends Component {
 
   handleInputChange = event => {
     const { name, value } = event.target;
-   console.log("name: "+ name+ " value: " + value);
+    console.log("name: " + name + " value: " + value);
     this.setState({
       [name]: value
     });
@@ -66,35 +67,56 @@ class Search extends Component {
 
   render() {
     return (
-            // <form>
-            //   <Input
-            //     name="title"
-            //     placeholder="Title (required)"
-            //   />
-            //   <FormBtn>
-            //     Submit Book
-            //   </FormBtn>
+      // <form>
+      //   <Input
+      //     name="title"
+      //     placeholder="Title (required)"
+      //   />
+      //   <FormBtn>
+      //     Submit Book
+      //   </FormBtn>
 
-            // </form>
-         <form>
+      // </form>
+      <div>
+        <form>
           <div className="form-group">
             <label >Book:</label>
-          <input
-            value={this.state.title}
-            onChange={this.handleInputChange}
-            name="title"
-            placeholder="Title of Book (required)"
-          />
-          <button type="submit"
-          disabled={!(this.state.title)}
-          onClick={this.handleFormSubmit}
-          className="btn btn-success">
-          Search
-        </button>
+            <input
+              value={this.state.title}
+              onChange={this.handleInputChange}
+              name="title"
+              placeholder="Title of Book (required)"
+            />
+            <button type="submit"
+              disabled={!(this.state.title)}
+              onClick={this.handleFormSubmit}
+              className="btn btn-success">
+              Search
+            </button>
           </div>
+        </form>
 
-          </form> 
-            
+        {!this.state.books.length ? (
+          <h1 className="text-center">No Books to Display</h1>
+        ) : (
+            <BookList>
+              {this.state.books.map(book => {
+                return (
+                  <BookListItem
+                    // key={book.id}
+                    // title={book.title}
+                    // authors={book.authors}
+                    // summary={book.summary}
+                    // description={book.description}
+                    // href={book.url}
+                    // thumbnail={book.image} 
+                    book = {book}         
+                  />
+                );
+              })}
+            </BookList>
+          )}
+      </div>
     );
   }
 }
