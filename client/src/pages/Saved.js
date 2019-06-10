@@ -1,21 +1,51 @@
 import React, { Component } from "react";
+import API from "../utils/API";
+import { BookList, BookListItem } from "../components/BookList";
 
 class Saved extends Component {
   state = {
-    book: {}
+    books: []
   };
-  // When this component mounts, grab the book with the _id of this.props.match.params.id
-  // e.g. localhost:3000/books/599dcb67f0f16317844583fc
+  // When this component mounts, grab the saved books
   componentDidMount() {
-    // API.getBook(this.props.match.params.id)
-    //   .then(res => this.setState({ book: res.data }))
-    //   .catch(err => console.log(err));
+    this.loadBooks();
     console.log("I have rendered the Saved page");
   }
 
+  deleteBook = id => {
+    console.log("I am in delete method in Saved " + this.id);
+    API.deleteBook(id)
+      .then(res => this.loadBooks())
+      .catch(err => console.log(err));
+  };
+
+  loadBooks = () => {
+    API.getSavedBooks()
+      .then(res => {
+        console.log("I am in the saved page " + JSON.stringify(res.data));
+        this.setState({ books: res.data });
+      })
+      .catch(err => console.log(err));
+    }
+
   render() {
     return (
-        <h1>I'm saved</h1>
+        <div>
+        {!this.state.books.length ? (
+          <h1 className="text-center">No Books to Display</h1>
+        ) : (
+            <BookList>
+              {this.state.books.map(book => {
+                return (
+                  <BookListItem
+                    book = {book}  
+                    deleteBook = {(e) => this.deleteBook(book._id, e)}
+                  />
+                );
+              })}
+            </BookList>
+          )}
+          </div>
     );
   }
 }
