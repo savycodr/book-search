@@ -19,7 +19,7 @@ export function GoogleBookListItem({
 }) {
   return (
 
-    <li className="list-group-item" key={book.id}>
+    <li className="list-group-item" key={book.googleId}>
     
       <Container>
         <Row>

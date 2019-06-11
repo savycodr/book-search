@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import { BookList, GoogleBookListItem } from "../components/BookList";
 
-// in state we hold the array of books that are populated from the api call to google books, the title the user is searching for
+// in state we hold the array of books that are populated from the api call to google books, the title the user is searching for, an error when a save is called on a book that was already saved.
 class Search extends Component {
   state = {
     books: [],
     title: "",
+    saveError: false
   };
 
   componentDidMount() {
@@ -17,25 +18,21 @@ class Search extends Component {
   // call the api to get all the books with this title
   // this is a clientside call to google books
   loadBooks = () => {
+
+    // reset any error messages
+    this.setState({ saveError: false });
+
     API.getBooks(this.state.title)
       .then(res => {
-        console.log("data is: " + JSON.stringify(res.data));
-        // this.setState({ books: res.data[0], title: "", author: "", synopsis: "" })
-        console.log("the data is length: " + res.data.items.length);
-        console.log("the first title: " + res.data.items[0].volumeInfo.title);
+        // console.log("data is: " + JSON.stringify(res.data));
+        // console.log("the data is length: " + res.data.items.length);
+        // console.log("the first title: " + res.data.items[0].volumeInfo.title);
         let localBooks = [];
 
-        // lets map the info
+        // lets grab the information that we need
         res.data.items.map(item => {
-          console.log("the  id: " + item.id);
-          console.log("the  title: " + item.volumeInfo.title);
-          console.log("the  authors: " + item.volumeInfo.authors.length);
-          console.log("the  description: " + item.volumeInfo.description);
-          console.log("the  summary: " + item.searchInfo.textSnippet);
-          console.log("the  url: " + item.volumeInfo.infoLink);
-          console.log("the  image: " + item.volumeInfo.imageLinks.thumbnail);
           let book = {};
-          book.id = item.id;
+          book.googleId = item.id;
           book.title = item.volumeInfo.title;
           book.authors = item.volumeInfo.authors;
           book.description = item.volumeInfo.description;
@@ -56,16 +53,32 @@ class Search extends Component {
   // It will call a post to the /books route.
   saveBook = (newBook, e) => {
 
-  console.log("saved!!! " + newBook.title);
+  // console.log("saved!!! " + newBook.title);
 
   API.saveBook({
     book: newBook
   })
-    .then( 
-      //HLS when a book has been saved what do you want to do?
-      )
-    .catch(err => console.log(err));
+    .then( () => {
+      // when a book has been saved what do you want to do?
+      // remove it from the display
+      // Filter this.state.books for books with an id not equal to the id being removed
+      const newBooks = this.state.books.filter(book => book.googleId !== newBook.googleId);
+      // Set this.state.friends equal to the new books array        
+      this.setState({ books: newBooks });
+      // reset any error messages
+      this.setState({ saveError: false });
 
+    })
+    // this might happen if the user selects a book that has already been saved
+    // In this case we might want to tell the user
+    .catch(err => {
+      // check if the error is because the book has already been saved.
+      if (err.response.status === 500)
+      {
+        this.setState({ saveError: true });
+      }
+      console.log(err)
+    });
 }
 
   handleInputChange = event => {
@@ -116,6 +129,8 @@ class Search extends Component {
           <h1 className="text-center">No Books to Display</h1>
         ) : (
             <BookList>
+              {this.state.saveError ? <h2>This book has alrady been saved</h2> : <br/>}
+
               {this.state.books.map(book => {
                 return (
                   <GoogleBookListItem

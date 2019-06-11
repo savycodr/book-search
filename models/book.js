@@ -8,6 +8,7 @@ const bookSchema = new Schema({
   description: String,
   url: String,
   image: String,
+  googleId: { type: String, required: true, unique: [true, "This book has already been saved."]},
   date: { type: Date, default: Date.now }
 });
 
