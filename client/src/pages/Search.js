@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import { BookList, GoogleBookListItem } from "../components/BookList";
+import { Input, FormBtn } from "../components/Form";
+
+
+const styles = {
+  h2: {
+    color: "red",
+  }
+};
+
 
 // in state we hold the array of books that are populated from the api call to google books, the title the user is searching for, an error when a save is called on a book that was already saved.
 class Search extends Component {
@@ -106,16 +115,17 @@ class Search extends Component {
       //   </FormBtn>
 
       // </form>
-      <div>
+      <div className="container">
         <form>
           <div className="form-group">
             <label >Book:</label>
-            <input
+            <input className="form-control"
               value={this.state.title}
               onChange={this.handleInputChange}
               name="title"
               placeholder="Title of Book (required)"
             />
+            <br/>
             <button type="submit"
               disabled={!(this.state.title)}
               onClick={this.handleFormSubmit}
@@ -129,7 +139,7 @@ class Search extends Component {
           <h1 className="text-center">No Books to Display</h1>
         ) : (
             <BookList>
-              {this.state.saveError ? <h2>This book has alrady been saved</h2> : <br/>}
+              {this.state.saveError ? <h2 style={styles.h2}>This book has already been saved</h2> : <br/>}
 
               {this.state.books.map(book => {
                 return (

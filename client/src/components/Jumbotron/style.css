@@ -1,4 +1,13 @@
 .jumbotron {
   min-height: 200px;
   padding-top: 50px;
+  background-image: url("/books-1204029_1280.jpg");
+  background-position: 'center';
+  background-size: 'cover';
+  background-repeat: 'no-repeat';
+  color: white
+}
+
+.message {
+  background-color: rgba(52, 52, 52, 0.6)
 }

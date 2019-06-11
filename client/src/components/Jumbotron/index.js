@@ -4,8 +4,10 @@ import "./style.css";
 function Jumbotron() {
   return (
     <div className="jumbotron text-center">
-      <h1>Google Books Search</h1>
-      <h3>Search and Save Books of Interest</h3>
+      <div className="container-fluid message">
+        <h1>Google Books Search</h1>
+        <h3>Search and Save Books of Interest</h3>
+      </div>
     </div>
   );
 }

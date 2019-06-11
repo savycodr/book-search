@@ -2,6 +2,7 @@ import React from "react";
 import Thumbnail from "../Thumbnail";
 import { Container, Row, Col } from "../Grid";
 import DeleteBtn from "../DeleteBtn";
+import "./style.css";
 
 
 // Exporting both BookList and BookListItem from this file
@@ -23,7 +24,7 @@ export function GoogleBookListItem({
     
       <Container>
         <Row>
-         <Col size="xs-4 sm-10">
+         <Col size="xs-4 sm-9">
          <h3>{book.title}</h3>
          {book.authors.length===1 ? 
          (  <p>Author: {book.authors}</p>) 
@@ -32,8 +33,8 @@ export function GoogleBookListItem({
          <p>{book.summary}</p>
          </Col>
 
-          <Col size="xs-4 sm-2">
-            <a type="button" rel="noreferrer noopener" className="btn btn-outline-success" target="_blank" href={book.url}>View</a> 
+          <Col size="xs-4 sm-3">
+            <a type="button" rel="noreferrer noopener" className="btn btn-outline-success btn-space" target="_blank" href={book.url}>View</a> 
             <button type="button" className="btn btn-primary" onClick={saveBook}>Save</button>
           </Col>
         </Row>
@@ -65,7 +66,7 @@ export function BookListItem({
     
       <Container>
         <Row>
-         <Col size="xs-4 sm-10">
+         <Col size="xs-4 sm-9">
          <h3>{book.title}</h3>
          {book.authors.length===1 ? 
          (  <p>Author: {book.authors}</p>) 
@@ -74,8 +75,8 @@ export function BookListItem({
          <p>{book.summary}</p>
          </Col>
 
-          <Col size="xs-4 sm-2">
-            <a type="button" rel="noreferrer noopener" className="btn btn-outline-success" target="_blank" href={book.url}>View</a>
+          <Col size="xs-4 sm-3">
+            <a type="button" rel="noreferrer noopener" className="btn btn-outline-success  btn-space" target="_blank" href={book.url}>View</a>
             <button type="button" className="btn btn-danger" onClick={deleteBook}>Delete</button>
           </Col>
         </Row>
