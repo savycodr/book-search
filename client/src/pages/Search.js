@@ -45,7 +45,8 @@ class Search extends Component {
           book.title = item.volumeInfo.title;
           book.authors = item.volumeInfo.authors;
           book.description = item.volumeInfo.description;
-          book.summary = item.searchInfo.textSnippet;
+          // console.log("title " + book.title + " description " + book.description);
+          item.searchInfo ? book.summary = item.searchInfo.textSnippet :  book.summary = "";
           book.url = item.volumeInfo.infoLink;
           book.image = item.volumeInfo.imageLinks.thumbnail;
           localBooks.push(book);
